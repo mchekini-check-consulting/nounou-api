@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/nounous")
-@CrossOrigin("*")
 public class NounouResource {
 
 
@@ -33,7 +32,7 @@ public class NounouResource {
         return nounouService
                 .getNounouByEmail(email)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.noContent().build());
     }
 
     @PutMapping

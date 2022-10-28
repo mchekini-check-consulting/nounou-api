@@ -5,15 +5,10 @@ import lombok.Data;
 
 @Data
 public class NounouDTO {
+    private String email;
+    private String pseudo;
     private String nom;
     private String prenom;
     private String adresse;
     private String numeroTelephone;
-
-    public NounouDTO(Nounou nounou) {
-        nom = nounou.getNom();
-        prenom = nounou.getPrenom();
-        adresse = nounou.getAdresse();
-        numeroTelephone = nounou.getNumeroTelephone();
-    }
 }
