@@ -1,6 +1,5 @@
 package fr.checkconsulting.nounouapi.dto;
 
-import fr.checkconsulting.nounouapi.entity.Nounou;
 import lombok.Data;
 
 @Data

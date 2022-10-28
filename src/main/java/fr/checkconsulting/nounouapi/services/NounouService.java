@@ -24,6 +24,7 @@ public class NounouService {
         this.nounouRepository = nounouRepository;
     }
 
+
     public List<NounouDTO> getAllNounous() {
         return nounouRepository
                 .findAll()
@@ -32,13 +33,25 @@ public class NounouService {
                 .collect(Collectors.toList());
     }
 
+
     public Optional<NounouDTO> getNounouByEmail(String email) {
         return nounouRepository
                 .findById(email)
                 .map(nounou -> modelMapper.map(nounou, NounouDTO.class));
     }
 
-    public void updateNounou(Nounou famille) {
-        nounouRepository.save(famille);
+
+    public Optional<Nounou> updateNounou(String email, Nounou nounouRequestBody) {
+        Optional<Nounou> nounou = nounouRepository.findById(email);
+        nounou.ifPresent(nounou1 -> {
+            nounou1.setNom(nounouRequestBody.getNom());
+            nounou1.setPrenom(nounouRequestBody.getPrenom());
+            nounou1.setAdresse(nounouRequestBody.getAdresse());
+            nounou1.setNumeroTelephone(nounouRequestBody.getNumeroTelephone());
+            nounouRepository.save(nounou1);
+        });
+        return nounou;
     }
+
+
 }
