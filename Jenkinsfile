@@ -4,7 +4,7 @@ node("ci-node") {
     }
     stage("build") {
         sh "chmod 777 mvnw"
-        sh "./mvnw clean package"
+        sh "./mvnw clean package -DskipTests=true"
     }
     stage("build docker image") {
         sh "sudo docker build -t nounou-api ."
