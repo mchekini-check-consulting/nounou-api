@@ -1,9 +1,6 @@
 spring:
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
   datasource:
-    username: sa
+    username: postgres
     url: jdbc:postgresql://nounou-db:5432/postgres
     driverClassName: org.h2.Driver
     password: nounou
