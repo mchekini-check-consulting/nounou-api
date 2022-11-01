@@ -2,10 +2,11 @@ spring:
   datasource:
     username: postgres
     url: jdbc:postgresql://nounou-db:5432/postgres
-    driverClassName: org.h2.Driver
+    driverClassName: org.postgresql.Driver
     password: nounou
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
     hibernate:
       ddl-auto: validate
 
