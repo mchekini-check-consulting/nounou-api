@@ -17,9 +17,9 @@ node("ci-node") {
     node("integration-node") {
         stage("deploy nounou api") {
             try {
-                sh "sudo docker rmi mchekini/nounou-api:1.0"
                 sh "sudo docker stop nounou-api"
                 sh "sudo docker rm nounou-api"
+                sh "sudo docker rmi mchekini/nounou-api:1.0"
             }catch(Exception e){
                 println "No container nounou-api running"
             }
