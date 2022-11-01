@@ -1,14 +1,18 @@
 spring:
   datasource:
-    username: postgres
     url: jdbc:postgresql://nounou-db:5432/postgres
-    driverClassName: org.postgresql.Driver
+    username: postgres
     password: nounou
+    driverClassName: org.postgresql.Driver
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
     database: postgresql
     hibernate:
       ddl-auto: validate
+      naming:
+        strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
 server:
   port: 8080
