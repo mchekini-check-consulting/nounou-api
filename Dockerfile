@@ -1,4 +1,4 @@
-FROM java:openjdk-8u111-jdk
+FROM openjdk:17-jdk
 WORKDIR /opt
 ADD target/nounou-api-*.jar nounou-api.jar
 EXPOSE 8080
