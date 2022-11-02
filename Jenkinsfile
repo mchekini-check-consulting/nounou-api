@@ -9,10 +9,10 @@ node("ci-node") {
 
     stage("Quality Analyses"){
         sh "chmod 777 mvnw"
-        sh "./mvnw sonar:sonar \\\n" +
+        sh "./mvnw clean verify sonar:sonar \\\n" +
                 "  -Dsonar.projectKey=nounou-api \\\n" +
                 "  -Dsonar.host.url=http://3.87.90.191:11001 \\\n" +
-                "  -Dsonar.login=20ad2c45811ee6274b5f6be60a143ecdd3c444ad"
+                "  -Dsonar.login=sqp_434eefc0e835129fe9b68c2a7829d048250172ef"
     }
 
     stage("build docker image") {
