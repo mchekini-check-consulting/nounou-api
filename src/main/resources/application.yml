@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: local
   datasource:
     url: jdbc:postgresql://nounou-db:5432/postgres
     username: postgres
