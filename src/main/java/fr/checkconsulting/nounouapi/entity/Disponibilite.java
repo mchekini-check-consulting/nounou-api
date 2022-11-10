@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@IdClass(DisponibiliteId.class)
 public class Disponibilite {
     @Id
+    private int id;
     private int jour;
     private LocalDateTime date_debut_matin;
     private LocalDateTime date_fin_matin;
@@ -23,6 +23,5 @@ public class Disponibilite {
     private LocalDateTime date_fin_midi;
     private LocalDateTime date_debut_soir;
     private LocalDateTime date_fin_soir;
-    @Id
-    private String nounou_id;
+    private String nounouId;
 }

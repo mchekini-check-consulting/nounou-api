@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DisponibiliteDTO {
+    private int id;
     private int jour;
     private LocalDateTime date_debut_matin;
     private LocalDateTime date_fin_matin;
@@ -17,5 +18,5 @@ public class DisponibiliteDTO {
     private LocalDateTime date_fin_midi;
     private LocalDateTime date_debut_soir;
     private LocalDateTime date_fin_soir;
-    private String nounou_id;
+    private String nounouId;
 }

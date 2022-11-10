@@ -1,9 +1,15 @@
 package fr.checkconsulting.nounouapi.resources;
 
+import fr.checkconsulting.nounouapi.dto.DisponibiliteDTO;
 import fr.checkconsulting.nounouapi.services.DisponibiliteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/disponibilites")
@@ -13,5 +19,10 @@ public class DisponibiliteResource {
     @Autowired
     public DisponibiliteResource(DisponibiliteService disponibiliteService) {
         this.disponibiliteService = disponibiliteService;
+    }
+
+    @GetMapping("{nounouId}")
+    public ResponseEntity<List<DisponibiliteDTO>> getAllDisponibilitesByNounouId(@PathVariable("nounouId") String nounouId) {
+        return ResponseEntity.ok(disponibiliteService.getAllDisponibilitesByNounouId(nounouId));
     }
 }
