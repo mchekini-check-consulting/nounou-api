@@ -3,9 +3,3 @@ insert into nounou (email, nom, prenom,adresse,numero_telephone,pseudo) values
 
 insert into nounou (email, nom, prenom,adresse,numero_telephone,pseudo) values
                  ('larabimohandrachid@gmail.com', 'larabi', 'mohand', 'Bouzeguene', '0555555555', 'm-larabi');
-
-insert into nounou (email, nom, prenom,adresse,numero_telephone,pseudo) values
-                 ('salah.abderraouf@gmail.com', 'Salah', 'Abderraouf', 'Alger', '0555555557', 'abderraouf.salah');
-
-insert into nounou (email, nom, prenom,adresse,numero_telephone,pseudo) values
-                 ('zakaria.ztm@gmail.com', 'TOUAHRIA MILIANI', 'Zakaria', 'Alger', '0555555558', 'zakaria');
