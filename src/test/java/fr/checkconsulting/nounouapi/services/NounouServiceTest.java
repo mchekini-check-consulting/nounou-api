@@ -40,7 +40,7 @@ class NounouServiceTest {
     }
 
     @Test
-    void itShouldReturnAllNounous() {
+    void shouldReturnAllNounous() {
         List<Nounou> nounouList = Arrays.asList(
                 new Nounou("salah.abderraouf@gmail.com", "Salah", "Abderraouf", "Alger", "0555555556", "abderraouf.salah"),
                 new Nounou("zakaria.ztm@gmail.com", "TOUAHRIA MILIANI", "Zakaria", "Alger", "0555555557", "zakaria")
@@ -50,7 +50,7 @@ class NounouServiceTest {
     }
 
     @Test
-    void itShouldReturnAnEmptyNounousList() {
+    void shouldReturnAnEmptyNounousList() {
         Mockito.when(nounouRepository.findAll()).thenReturn(Collections.emptyList());
         Assertions.assertTrue(nounouService.getAllNounous().isEmpty());
     }
