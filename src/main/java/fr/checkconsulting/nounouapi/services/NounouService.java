@@ -3,6 +3,7 @@ package fr.checkconsulting.nounouapi.services;
 import fr.checkconsulting.nounouapi.dto.NounouDTO;
 import fr.checkconsulting.nounouapi.entity.Nounou;
 import fr.checkconsulting.nounouapi.repository.NounouRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class NounouService {
 
     private final ModelMapper modelMapper;
@@ -42,9 +44,13 @@ public class NounouService {
     public Optional<NounouDTO> getNounouByEmail() {
         Jwt user =  ((Jwt) SecurityContextHolder.getContext().getAuthentication().getCredentials());
         String email = String.valueOf(user.getClaims().get("email"));
-        return nounouRepository
+        Optional<NounouDTO> result =  nounouRepository
                 .findById(email)
                 .map(nounou -> modelMapper.map(nounou, NounouDTO.class));
+        if(result.isPresent()){
+            log.info("recupreation des données effectué avec succès" + result.get());
+        }
+        return result;
     }
 
 
