@@ -1,7 +1,8 @@
+package fr.checkconsulting.nounouapi;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.spring.CucumberContextConfiguration;
 import org.junit.jupiter.api.Assertions;
 
 public class AdditionTest {

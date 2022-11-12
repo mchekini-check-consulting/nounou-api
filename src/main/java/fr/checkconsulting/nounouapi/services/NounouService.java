@@ -5,8 +5,13 @@ import fr.checkconsulting.nounouapi.entity.Nounou;
 import fr.checkconsulting.nounouapi.repository.NounouRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,7 +39,9 @@ public class NounouService {
     }
 
 
-    public Optional<NounouDTO> getNounouByEmail(String email) {
+    public Optional<NounouDTO> getNounouByEmail() {
+        Jwt user =  ((Jwt) SecurityContextHolder.getContext().getAuthentication().getCredentials());
+        String email = String.valueOf(user.getClaims().get("email"));
         return nounouRepository
                 .findById(email)
                 .map(nounou -> modelMapper.map(nounou, NounouDTO.class));

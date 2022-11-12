@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/nounous")
+@RequestMapping("api/v1/nounou")
 public class NounouResource {
 
 
@@ -32,16 +32,16 @@ public class NounouResource {
     }
 
 
-    @GetMapping("{email}")
-    public ResponseEntity<NounouDTO> getNounouById(@PathVariable("email") String email) {
+    @GetMapping("")
+    public ResponseEntity<NounouDTO> getNounouById() {
         return nounouService
-                .getNounouByEmail(email)
+                .getNounouByEmail()
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.noContent().build());
     }
 
 
-    @PutMapping("/{email}")
+    @PutMapping("/update")
     public ResponseEntity<NounouDTO> updateNounou(@PathVariable String email, @RequestBody NounouDTO nounouDTO) {
         Nounou nounou = modelMapper.map(nounouDTO, Nounou.class);
         return nounouService.updateNounou(email, nounou)

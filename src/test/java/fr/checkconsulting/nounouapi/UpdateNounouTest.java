@@ -17,16 +17,16 @@ import org.springframework.test.context.ActiveProfiles;
 @CucumberContextConfiguration
 @SpringBootTest(classes = NounouApiApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-public class EmailTest {
+public class UpdateNounouTest {
     @LocalServerPort
-    String port;
+    private String port;
     @Autowired
     NounouRepository nounouRepository;
     @Autowired
     TestRestTemplate testRestTemplate;
-    String updateNounouUrl;
-    String email;
-    NounouDTO nounouDTO;
+    private String updateNounouUrl;
+    private String email;
+    private NounouDTO nounouDTO;
 
     @Given("Une nounou avec le nom={string}, le prenom={string}, email={string} persistée dans la base de données")
     public void une_nounou_avec_le_nom_le_prenom_email_persistée_dans_la_base_de_données(String lastname, String firstname, String email) {
