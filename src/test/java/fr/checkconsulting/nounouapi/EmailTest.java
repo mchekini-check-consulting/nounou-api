@@ -6,33 +6,26 @@ import fr.checkconsulting.nounouapi.repository.NounouRepository;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.spring.CucumberContextConfiguration;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ActiveProfiles;
 
+@CucumberContextConfiguration
 @SpringBootTest(classes = NounouApiApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-@DataJpaTest
-@EnableJpaRepositories("fr.checkconsulting.nounouapi.repository")
 public class EmailTest {
     @LocalServerPort
     String port;
-
-    @Autowired(required = false)
+    @Autowired
     NounouRepository nounouRepository;
-
-    @Autowired(required = false)
+    @Autowired
     TestRestTemplate testRestTemplate;
-
     String updateNounouUrl;
-
     String email;
-
     NounouDTO nounouDTO;
 
     @Given("Une nounou avec le nom={string}, le prenom={string}, email={string} persistée dans la base de données")
@@ -49,7 +42,11 @@ public class EmailTest {
 
     @When("avec les paramètres: nom={string}, prenom={string} et email={string}")
     public void avec_les_paramètres_nom_prenom_et_email(String newLastname, String newFirstname, String newEmail) {
-        NounouDTO body = new NounouDTO(newEmail, newLastname, newFirstname, null, null, null);
+        NounouDTO body = NounouDTO.builder()
+                .nom(newLastname)
+                .prenom(newFirstname)
+                .email(newEmail)
+                .build();
         testRestTemplate.put("http://localhost:" + port + updateNounouUrl + email, body);
     }
 

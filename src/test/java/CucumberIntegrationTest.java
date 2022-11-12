@@ -3,8 +3,11 @@ import io.cucumber.junit.CucumberOptions;
 import io.cucumber.spring.CucumberContextConfiguration;
 import org.junit.runner.RunWith;
 
-@CucumberContextConfiguration
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/features")
+@CucumberOptions(
+        plugin = {"pretty", "html:target/reports/cucumber.html",
+                "json:target/reports/cucumber.json",
+                "junit:target/reports/cucumber.xml"},
+        features = "src/test/resources/features")
 public class CucumberIntegrationTest {
 }
