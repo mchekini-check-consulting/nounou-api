@@ -11,7 +11,4 @@ import org.junit.runner.RunWith;
                 "junit:target/reports/cucumber.xml"},
         features = "src/test/resources/features")
 public class CucumberIntegrationTest {
-
-    public CucumberIntegrationTest() {
-    }
 }
