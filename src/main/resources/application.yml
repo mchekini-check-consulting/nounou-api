@@ -4,8 +4,6 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://3.87.90.191:10000/auth/realms/nounou
-  profiles:
-    active: local
   datasource:
     url: jdbc:postgresql://nounou-db:5432/postgres
     username: postgres
