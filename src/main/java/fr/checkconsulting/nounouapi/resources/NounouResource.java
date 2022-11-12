@@ -32,7 +32,7 @@ public class NounouResource {
     }
 
 
-    @GetMapping("")
+    @GetMapping("/get")
     public ResponseEntity<NounouDTO> getNounouById() {
         return nounouService
                 .getNounouByEmail()
