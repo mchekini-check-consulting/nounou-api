@@ -14,6 +14,6 @@ public class HealthCheckResource {
 
     @GetMapping("health")
     public ResponseEntity<String> healthCheck(){
-        return ResponseEntity.ok("application is UP updated");
+        return ResponseEntity.ok("application is UP");
     }
 }

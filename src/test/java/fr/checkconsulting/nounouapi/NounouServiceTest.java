@@ -1,6 +1,5 @@
 package fr.checkconsulting.nounouapi;
 
-import fr.checkconsulting.nounouapi.dto.NounouDTO;
 import fr.checkconsulting.nounouapi.entity.Nounou;
 import fr.checkconsulting.nounouapi.repository.NounouRepository;
 import fr.checkconsulting.nounouapi.services.NounouService;

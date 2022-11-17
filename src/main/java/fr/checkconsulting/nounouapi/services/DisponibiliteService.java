@@ -1,6 +1,7 @@
 package fr.checkconsulting.nounouapi.services;
 
 import fr.checkconsulting.nounouapi.dto.DisponibiliteDTO;
+import fr.checkconsulting.nounouapi.entity.Disponibilite;
 import fr.checkconsulting.nounouapi.repository.DisponibiliteRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,19 @@ public class DisponibiliteService {
     public List<DisponibiliteDTO> getAllDisponibilitesByNounouId(String nounouId) {
         return disponibiliteRepository
                 .findAllByNounouId(nounouId)
+                .stream()
+                .map(disponibilite -> modelMapper.map(disponibilite, DisponibiliteDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public List<DisponibiliteDTO> createNounouDisponibilites(List<DisponibiliteDTO> listDisponibiliteDTO) {
+        List<Disponibilite> result = disponibiliteRepository.saveAll(
+                listDisponibiliteDTO
+                        .stream()
+                        .map(disponibiliteDTO -> modelMapper.map(disponibiliteDTO, Disponibilite.class))
+                        .collect(Collectors.toList())
+        );
+        return result
                 .stream()
                 .map(disponibilite -> modelMapper.map(disponibilite, DisponibiliteDTO.class))
                 .collect(Collectors.toList());
