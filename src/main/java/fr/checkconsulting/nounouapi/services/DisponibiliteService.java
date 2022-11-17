@@ -5,8 +5,11 @@ import fr.checkconsulting.nounouapi.entity.Disponibilite;
 import fr.checkconsulting.nounouapi.repository.DisponibiliteRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,5 +43,12 @@ public class DisponibiliteService {
                 .stream()
                 .map(disponibilite -> modelMapper.map(disponibilite, DisponibiliteDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void deleteDisponibilitesByNounouId() {
+        Jwt user =  ((Jwt) SecurityContextHolder.getContext().getAuthentication().getCredentials());
+        String nounouId = String.valueOf(user.getClaims().get("email"));
+        disponibiliteRepository.deleteAllByNounouId(nounouId);
     }
 }
