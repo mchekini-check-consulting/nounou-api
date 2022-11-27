@@ -31,7 +31,11 @@ public class UpdateNounouTest {
     @Given("Une nounou avec le nom={string}, le prenom={string}, email={string} persistée dans la base de données")
     public void une_nounou_avec_le_nom_le_prenom_email_persistée_dans_la_base_de_données(String lastname, String firstname, String email) {
         this.email = email;
-        Nounou nounou = new Nounou(email, lastname, firstname, null, null, null);
+        Nounou nounou = Nounou.builder()
+                .email(email)
+                .nom(lastname)
+                .prenom(firstname)
+                .build();
         nounouRepository.save(nounou);
     }
 
@@ -45,7 +49,7 @@ public class UpdateNounouTest {
         NounouDTO body = NounouDTO.builder()
                 .nom(newLastname)
                 .prenom(newFirstname)
-                .email(newEmail)
+                .mail(newEmail)
                 .build();
         testRestTemplate.put("http://localhost:" + port + updateNounouUrl + email, body);
     }
@@ -59,6 +63,6 @@ public class UpdateNounouTest {
     public void je_dois_vérifier_que_nom_prenom_et_email(String newLastname, String newFirstname, String email) {
         Assertions.assertEquals(newLastname, nounouDTO.getNom());
         Assertions.assertEquals(newFirstname, nounouDTO.getPrenom());
-        Assertions.assertEquals(email, nounouDTO.getEmail());
+        Assertions.assertEquals(email, nounouDTO.getMail());
     }
 }

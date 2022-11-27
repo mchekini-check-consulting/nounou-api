@@ -1,12 +1,12 @@
 version: '2'
 services:
-  nounou-api:
-    image: mchekini/nounou-api:1.0
-    container_name: nounou-api
-    ports:
-      - "8080:8080"
-    links:
-      - "nounou-db:nounou-db"
+#  nounou-api:
+#    image: mchekini/nounou-api:1.0
+#    container_name: nounou-api
+#    ports:
+#      - "8080:8080"
+#    links:
+#      - "nounou-db:nounou-db"
   nounou-db:
     image: postgres
     container_name: nounou-db

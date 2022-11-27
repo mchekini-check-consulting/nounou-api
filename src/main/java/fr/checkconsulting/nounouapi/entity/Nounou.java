@@ -1,6 +1,7 @@
 package fr.checkconsulting.nounouapi.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,13 +12,16 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 public class Nounou {
 
     @Id
     private String email;
     private String nom;
     private String prenom;
-    private String adresse;
+    private String rue;
+    private String codePostal;
+    private String ville;
     private String numeroTelephone;
     private String pseudo;
 }

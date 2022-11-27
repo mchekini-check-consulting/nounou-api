@@ -39,7 +39,7 @@ public class NounouService {
 
 
     public Optional<NounouDTO> getNounouByEmail() {
-        Jwt user =  ((Jwt) SecurityContextHolder.getContext().getAuthentication().getCredentials());
+        Jwt user = ((Jwt) SecurityContextHolder.getContext().getAuthentication().getCredentials());
         String email = String.valueOf(user.getClaims().get("email"));
         return nounouRepository
                 .findById(email)
@@ -52,7 +52,9 @@ public class NounouService {
         nounou.ifPresent(nounou1 -> {
             nounou1.setNom(nounouRequestBody.getNom());
             nounou1.setPrenom(nounouRequestBody.getPrenom());
-            nounou1.setAdresse(nounouRequestBody.getAdresse());
+            nounou1.setRue(nounouRequestBody.getRue());
+            nounou1.setVille(nounouRequestBody.getVille());
+            nounou1.setCodePostal(nounouRequestBody.getCodePostal());
             nounou1.setNumeroTelephone(nounouRequestBody.getNumeroTelephone());
             nounouRepository.save(nounou1);
         });
