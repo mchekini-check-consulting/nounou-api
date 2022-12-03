@@ -1,0 +1,21 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /db
+  datasource:
+    url: jdbc:h2:mem:nounou
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    database: H2
+    hibernate:
+      ddl-auto: validate
+      naming:
+        strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  flyway:
+    locations: classpath:db/dev

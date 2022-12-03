@@ -32,7 +32,9 @@ public class DisponibiliteService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public List<DisponibiliteDTO> createNounouDisponibilites(List<DisponibiliteDTO> listDisponibiliteDTO) {
+        deleteDisponibilitesByNounouId();
         List<Disponibilite> result = disponibiliteRepository.saveAll(
                 listDisponibiliteDTO
                         .stream()
