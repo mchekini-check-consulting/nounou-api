@@ -10,9 +10,6 @@ import java.util.List;
 
 @Repository
 public interface NounouRepository extends JpaRepository<Nounou, String> {
-
-
     @Query("select n from Nounou n where (:nom is null or n.nom = :nom) and (:prenom is null or n.prenom = :prenom) and (:ville is null or n.ville = :ville)")
     List<Nounou> getNounousByCriteria(@Param("nom") String nom, @Param("prenom") String prenom, @Param("ville") String ville);
-
 }

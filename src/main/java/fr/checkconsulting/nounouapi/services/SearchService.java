@@ -4,6 +4,7 @@ import fr.checkconsulting.nounouapi.dto.FamilleDTO;
 import fr.checkconsulting.nounouapi.dto.NounouDTO;
 import fr.checkconsulting.nounouapi.entity.Nounou;
 import fr.checkconsulting.nounouapi.repository.NounouRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class SearchService {
 
@@ -56,11 +58,13 @@ public class SearchService {
     }
 
     public List<FamilleDTO> getFamilleByCriteria(String nom, String prenom, String ville) {
+        log.info("Résultat *********** : " + nom + " -- " + prenom + " -- " + ville);
+        String url = familleUrl + "/api/v1/famille/search/famille?nom=" + nom + "&prenom=" + prenom + "&ville=" + ville;
+        ResponseEntity<FamilleDTO[]> familles = restTemplate.getForEntity(url, FamilleDTO[].class);
 
-            String url = familleUrl + "/api/v1/nounou/search/nounou?nom=" + nom + "&prenom=" + prenom + "&ville=" + ville;
-            ResponseEntity<FamilleDTO[]> familles = restTemplate.getForEntity(url, FamilleDTO[].class);
+        log.info("Résultat *********** : " + familles);
 
-            return Arrays.stream(familles.getBody()).collect(Collectors.toList());
+        return Arrays.stream(familles.getBody()).collect(Collectors.toList());
 
     }
 }

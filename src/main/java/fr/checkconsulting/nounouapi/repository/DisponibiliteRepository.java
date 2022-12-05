@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface DisponibiliteRepository extends JpaRepository<Disponibilite, Integer> {
     List<Disponibilite> findAllByNounouId(String id);
+
+    void deleteAllByNounouId(String id);
 }

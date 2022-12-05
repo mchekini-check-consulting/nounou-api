@@ -12,14 +12,14 @@ public class SecurityConfigurtion {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        http.csrf().disable().authorizeRequests()
+        http.csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/api/v1/health/").permitAll()
                 .antMatchers("/api/v1/nounou/**").permitAll()
                 .antMatchers("/api/v1/disponibilites/**").authenticated()
                 .and()
                 .oauth2ResourceServer().jwt();
-
+        http.headers().frameOptions().disable();
         return http.build();
     }
 
