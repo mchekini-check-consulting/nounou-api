@@ -1,6 +1,13 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: nounou
+  kafka:
+    consumer:
+      group-id: chat-group-id
+      auto-offset-reset: earliest
+    bootstrap-servers: localhost:9092
 
 server:
   port: 8082

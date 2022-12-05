@@ -18,14 +18,21 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    locations: classpath:db/migration
+  kafka:
+    consumer:
+      group-id: chat-group-id
+      auto-offset-reset: earliest
+    bootstrap-servers: 3.87.90.191:9094
 
+producer:
+  kafka:
+    topic-name: chat-famille
 
 famille:
   application:
     url: "http://int.certification-tests.com:8081"
-
-
-
 
 javamelody:
   init-parameters:

@@ -27,4 +27,10 @@ public class DisponibiliteResource {
     public ResponseEntity<List<DisponibiliteDTO>> createNounouDisponibilites(@RequestBody List<DisponibiliteDTO> listDisponibiliteDTO) {
         return ResponseEntity.ok(disponibiliteService.createNounouDisponibilites(listDisponibiliteDTO));
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteDisponibilitesByNounouId() {
+        disponibiliteService.deleteDisponibilitesByNounouId();
+        return ResponseEntity.noContent().build();
+    }
 }
