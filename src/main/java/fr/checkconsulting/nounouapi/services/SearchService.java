@@ -59,7 +59,7 @@ public class SearchService {
 
     public List<FamilleDTO> getFamilleByCriteria(String nom, String prenom, String ville) {
         log.info("Résultat *********** : " + nom + " -- " + prenom + " -- " + ville);
-        String url = familleUrl + "/api/v1/famille/search/famille?nom=" + nom + "&prenom=" + prenom + "&ville=" + ville;
+        String url = familleUrl + "/api/v1/search/famille?nom=" + nom + "&prenom=" + prenom + "&ville=" + ville;
         ResponseEntity<FamilleDTO[]> familles = restTemplate.getForEntity(url, FamilleDTO[].class);
 
         log.info("Résultat *********** : " + familles);
