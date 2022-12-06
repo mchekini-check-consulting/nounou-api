@@ -15,7 +15,8 @@ public class SecurityConfigurtion {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/v1/health/").permitAll()
-                .antMatchers("/api/v1/nounou/**").permitAll()
+                .antMatchers("/api/v1/search/**").permitAll()
+                .antMatchers("/api/v1/nounou/**").authenticated()
                 .antMatchers("/api/v1/disponibilites/**").authenticated()
                 .and()
                 .oauth2ResourceServer().jwt();
