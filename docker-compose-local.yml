@@ -11,7 +11,7 @@ services:
     image: postgres
     container_name: nounou-db
     ports:
-      - "5434:5432"
+      - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=nounou
   zookeeper:
