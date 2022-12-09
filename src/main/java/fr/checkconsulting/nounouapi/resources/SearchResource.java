@@ -6,10 +6,8 @@ import fr.checkconsulting.nounouapi.dto.NounouDTO;
 import fr.checkconsulting.nounouapi.repository.DisponibiliteRepository;
 import fr.checkconsulting.nounouapi.services.DisponibiliteService;
 import fr.checkconsulting.nounouapi.services.SearchService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,9 +29,9 @@ public class SearchResource {
         return searchService.getNounouByCriteria(nom, prenom, ville);
     }
 
-    @GetMapping("dispo-nounou")
-    public List<DisponibiliteDTO> getDispoNounou(@RequestParam("email") String email) {
-        return disponibiliteService.getAllDisponibilitesByNounouId(email);
+    @GetMapping("dispo-nounou/{email}")
+    public ResponseEntity<List<DisponibiliteDTO>> getDispoNounou(@PathVariable("email") String email) {
+        return ResponseEntity.ok(disponibiliteService.getAllDisponibilitesByNounouId(email));
     }
 
     @GetMapping("famille")
