@@ -10,9 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -30,13 +34,28 @@ public class SearchService {
         this.restTemplate = restTemplate;
     }
 
-    public List<NounouDTO> getNounouByCriteria(String nom, String prenom, String ville) {
+    public List<NounouDTO> getNounouByCriteria(String nom, String prenom, String ville, String debut, String fin, int jour) {
 
         if ("".equals(nom)) nom = null;
         if ("".equals(prenom)) prenom = null;
         if ("".equals(ville)) ville = null;
+        if ("".equals(debut)) debut = null;
+        if ("".equals(fin)) fin = null;
 
-        List<Nounou> nounous = nounouRepository.getNounousByCriteria(nom, prenom, ville);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        Timestamp heureDebut = null;
+        Timestamp heureFin = null;
+        String d1 = debut.replace("T", " ");
+        String d2 = fin.replace("T", " ");
+        if (debut != null) {
+            heureDebut = Timestamp.valueOf(LocalDateTime.parse(d1, formatter)) ;
+        }
+        if (fin != null) {
+            heureFin = Timestamp.valueOf(LocalDateTime.parse(d2, formatter));
+        }
+
+
+        List<Nounou> nounous = nounouRepository.getNounousByCriteria(nom, prenom, ville, heureDebut, heureFin, jour);
 
         List<NounouDTO> nounouDtos = new ArrayList<>();
         nounous.forEach(nounou -> {
