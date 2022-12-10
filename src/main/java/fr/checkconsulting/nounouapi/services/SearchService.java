@@ -13,10 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -39,21 +36,20 @@ public class SearchService {
         if ("".equals(nom)) nom = null;
         if ("".equals(prenom)) prenom = null;
         if ("".equals(ville)) ville = null;
-        if ("".equals(debut)) debut = null;
-        if ("".equals(fin)) fin = null;
+        if ("-1".equals(debut)) debut = null;
+        if ("-1".equals(fin)) fin = null;
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        Timestamp heureDebut = null;
-        Timestamp heureFin = null;
-        String d1 = debut.replace("T", " ");
-        String d2 = fin.replace("T", " ");
-        if (debut != null) {
-            heureDebut = Timestamp.valueOf(LocalDateTime.parse(d1, formatter)) ;
-        }
-        if (fin != null) {
-            heureFin = Timestamp.valueOf(LocalDateTime.parse(d2, formatter));
-        }
+        Integer heureDebut = null;
+        Integer heureFin = null;
+        String d1 = debut;
+        String d2 = fin;
 
+        if (d1 != null) {
+            heureDebut = Integer.parseInt(debut);
+        }
+        if (d2 != null) {
+            heureFin = Integer.parseInt(fin);
+        }
 
         List<Nounou> nounous = nounouRepository.getNounousByCriteria(nom, prenom, ville, heureDebut, heureFin, jour);
 
