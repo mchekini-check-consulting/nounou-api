@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,9 +45,11 @@ public class SearchService {
             NounouDTO nounouDto = NounouDTO.builder()
                     .nom(nounou.getNom())
                     .prenom(nounou.getPrenom())
-                    .adresse(String.join(" ", nounou.getRue(), nounou.getCodePostal(), nounou.getVille()))
+                    .rue(nounou.getRue())
+                    .codePostal(nounou.getCodePostal())
+                    .ville(nounou.getVille())
                     .mail(nounou.getEmail())
-                    .telephone(nounou.getNumeroTelephone())
+                    .numeroTelephone(nounou.getNumeroTelephone())
                     .build();
 
             nounouDtos.add(nounouDto);
@@ -57,9 +60,9 @@ public class SearchService {
 
     }
 
-    public List<FamilleDTO> getFamilleByCriteria(String nom, String prenom, String ville) {
+    public List<FamilleDTO> getFamilleByCriteria(String nom, String prenom, String ville, int jour, String heureDebut, String heureFin) {
         log.info("Résultat *********** : " + nom + " -- " + prenom + " -- " + ville);
-        String url = familleUrl + "/api/v1/search/famille?nom=" + nom + "&prenom=" + prenom + "&ville=" + ville;
+        String url = familleUrl + "/api/v1/search/famille?nom=" + nom + "&prenom=" + prenom + "&ville=" + ville + "&jour=" + jour + "&heureDebut=" + heureDebut + "&heureFin=" + heureFin;
         ResponseEntity<FamilleDTO[]> familles = restTemplate.getForEntity(url, FamilleDTO[].class);
 
         log.info("Résultat *********** : " + familles);
