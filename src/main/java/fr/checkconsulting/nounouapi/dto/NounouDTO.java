@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 public class NounouDTO {
     private String nom;
     private String prenom;
-    private String adresse;
-    private String telephone;
+    private String rue;
+    private String codePostal;
+    private String ville;
+    private String numeroTelephone;
     private String mail;
 }
