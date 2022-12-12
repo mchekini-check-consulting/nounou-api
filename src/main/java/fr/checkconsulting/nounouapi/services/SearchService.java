@@ -1,6 +1,5 @@
 package fr.checkconsulting.nounouapi.services;
 
-import com.google.common.collect.Iterables;
 import fr.checkconsulting.nounouapi.dto.FamilleDTO;
 import fr.checkconsulting.nounouapi.dto.NounouDTO;
 import fr.checkconsulting.nounouapi.entity.Disponibilite;
@@ -44,17 +43,11 @@ public class SearchService {
 
         List<Nounou> nounous = nounouRepository.getNounousByCriteria(nom, prenom, ville);
         List<Disponibilite> disponibilites = disponibiliteRepository.findAllByJour(jour);
-        if (disponibilites.isEmpty()) {
-            Iterables.removeAll(nounous, nounous);
-        }
-        else {
-            Map<String, List<LocalTime>> mappedDisponibilites = mapDisponibilites(disponibilites);
-            if (heureDebut != null && heureFin != null) {
-                List<String> emails = filterDisponibilitesByTimeInterval(mappedDisponibilites, LocalTime.parse(heureDebut), LocalTime.parse(heureFin));
-                nounous.removeIf(nounou -> !emails.contains(nounou.getEmail()));
-            } else {
-                nounous.removeIf(nounou -> disponibilites.stream().noneMatch(disponibilite -> disponibilite.getNounouId().equals(nounou.getEmail())));
-            }
+
+        Map<String, List<LocalTime>> mappedDisponibilites = mapDisponibilites(disponibilites);
+        if (heureDebut != null && heureFin != null) {
+            List<String> emails = filterDisponibilitesByTimeInterval(mappedDisponibilites, LocalTime.parse(heureDebut), LocalTime.parse(heureFin));
+            nounous.removeIf(nounou -> !emails.contains(nounou.getEmail()));
         }
 
         List<NounouDTO> nounouDtos = new ArrayList<>();
