@@ -5,7 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 
 @Data
 @AllArgsConstructor
@@ -16,12 +17,12 @@ public class Disponibilite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int jour;
-    private LocalDateTime date_debut_matin;
-    private LocalDateTime date_fin_matin;
-    private LocalDateTime date_debut_midi;
-    private LocalDateTime date_fin_midi;
-    private LocalDateTime date_debut_soir;
-    private LocalDateTime date_fin_soir;
+    private LocalTime date_debut_matin;
+    private LocalTime date_fin_matin;
+    private LocalTime date_debut_midi;
+    private LocalTime date_fin_midi;
+    private LocalTime date_debut_soir;
+    private LocalTime date_fin_soir;
     @ManyToOne
     @JoinColumn(name = "nounouId")
     private Nounou nounouId;
