@@ -26,6 +26,7 @@ class Infos {
 class InfosInt {
     public String nom;
     public String prenom;
+    public String emailFamille;
     public String emailNounou;
     public String periode;
     public String etat;
@@ -51,7 +52,10 @@ public class InterventionResource {
         String email = "essaid.brahiti@gmail.com";
         String url = familleUrl + "/api/v1/intervention/get-all-interventions?emailNounou=" + email;
         ResponseEntity<InfosInt[]> res = restTemplate.getForEntity(url, InfosInt[].class);
-        return Arrays.stream(res.getBody()).collect(Collectors.toList());
+        List<InfosInt> response = Arrays.stream(res.getBody()).collect(Collectors.toList());
+        LOG.info("Response from famille : {}", response);
+        response.forEach(r -> {r.setEmailFamille(r.getEmailNounou()); r.setEmailNounou("");});
+        return response;
     }
 
     @PutMapping("/reject")
