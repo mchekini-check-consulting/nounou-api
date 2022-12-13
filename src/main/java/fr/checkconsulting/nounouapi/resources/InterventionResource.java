@@ -48,8 +48,8 @@ public class InterventionResource {
 
     @GetMapping("/get-all-interventions")
     public List<InfosInt> getAllInterventionsNounou() {
-        //String email = CommonData.getEmail();
-        String email = "essaid.brahiti@gmail.com";
+        String email = CommonData.getEmail();
+        LOG.info("Email nounou : {}", email);
         String url = familleUrl + "/api/v1/intervention/get-all-interventions?emailNounou=" + email;
         ResponseEntity<InfosInt[]> res = restTemplate.getForEntity(url, InfosInt[].class);
         List<InfosInt> response = Arrays.stream(res.getBody()).collect(Collectors.toList());
