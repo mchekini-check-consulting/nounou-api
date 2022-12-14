@@ -14,6 +14,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/api/v1/health/").permitAll()
                 .antMatchers("/api/v1/search/**").permitAll()
+                .antMatchers("/actuator/**").permitAll()
                 .antMatchers("/api/v1/famille/**").authenticated()
                 .and()
                 .oauth2ResourceServer().jwt();
