@@ -44,8 +44,11 @@ public class SearchService {
         List<Nounou> nounous = nounouRepository.getNounousByCriteria(nom, prenom, ville);
         List<Disponibilite> disponibilites = disponibiliteRepository.findAllByJour(jour);
 
-        Map<String, List<LocalTime>> mappedDisponibilites = mapDisponibilites(disponibilites);
+        if (jour != -1) {
+            nounous.removeIf(nounou -> disponibilites.stream().noneMatch(disponibilite -> disponibilite.getNounouId().equals(nounou.getEmail())));
+        }
         if (heureDebut != null && heureFin != null) {
+            Map<String, List<List<LocalTime>>> mappedDisponibilites = mapDisponibilites(disponibilites);
             List<String> emails = filterDisponibilitesByTimeInterval(mappedDisponibilites, LocalTime.parse(heureDebut), LocalTime.parse(heureFin));
             nounous.removeIf(nounou -> !emails.contains(nounou.getEmail()));
         }
@@ -82,45 +85,53 @@ public class SearchService {
 
     }
 
-
-    private List<String> filterDisponibilitesByTimeInterval(Map<String, List<LocalTime>> disponibilites, LocalTime heureDebut, LocalTime heureFin) {
+    private List<String> filterDisponibilitesByTimeInterval(Map<String, List<List<LocalTime>>> disponibilites, LocalTime heureDebut, LocalTime heureFin) {
         List<String> emails = new ArrayList<>();
-        for (Map.Entry<String, List<LocalTime>> dispos : disponibilites.entrySet()) {
+        for (Map.Entry<String, List<List<LocalTime>>> disponibilite : disponibilites.entrySet()) {
             boolean validTimeInterval = false;
-            List<LocalTime> intervals = dispos.getValue();
-            for (int i = 0; i < intervals.size(); i += 2) {
-                if (!intervals.get(i).isAfter(heureDebut) && !heureFin.isAfter(intervals.get(i + 1))) {
-                    validTimeInterval = true;
+            for (List<LocalTime> intervals : disponibilite.getValue()) {
+                for (int i = 0; i < intervals.size(); i += 2) {
+                    if (!intervals.get(i).isAfter(heureDebut) && !heureFin.isAfter(intervals.get(i + 1))) {
+                        validTimeInterval = true;
+                        break;
+                    }
+                }
+                if (validTimeInterval) {
                     break;
                 }
             }
             if (validTimeInterval) {
-                emails.add(dispos.getKey());
+                emails.add(disponibilite.getKey());
             }
         }
         return emails;
     }
 
-    private HashMap<String, List<LocalTime>> mapDisponibilites(List<Disponibilite> disponibilites) {
-        HashMap<String, List<LocalTime>> transformedBesoins = new HashMap<>();
+    private Map<String, List<List<LocalTime>>> mapDisponibilites(List<Disponibilite> disponibilites) {
+        Map<String, List<List<LocalTime>>> mappingDisponibilites = new HashMap<>();
         for (Disponibilite disponibilite : disponibilites) {
-            List<LocalTime> timeList = new ArrayList<>();
-            if (disponibilite.getDateDebutMatin() != null) timeList.add(disponibilite.getDateDebutMatin());
-            if (disponibilite.getDateFinMatin() != null) timeList.add(disponibilite.getDateFinMatin());
-            if (disponibilite.getDateDebutMidi() != null) timeList.add(disponibilite.getDateDebutMidi());
-            if (disponibilite.getDateFinMidi() != null) timeList.add(disponibilite.getDateFinMidi());
-            if (disponibilite.getDateDebutSoir() != null) timeList.add(disponibilite.getDateDebutSoir());
-            if (disponibilite.getDateFinSoir() != null) timeList.add(disponibilite.getDateFinSoir());
-            if (timeList.size() == 6 && timeList.get(1).equals(timeList.get(2))) {
-                timeList.remove(1);
-                timeList.remove(1);
+            List<LocalTime> intervals = new ArrayList<>();
+            if (disponibilite.getDateDebutMatin() != null) intervals.add(disponibilite.getDateDebutMatin());
+            if (disponibilite.getDateFinMatin() != null) intervals.add(disponibilite.getDateFinMatin());
+            if (disponibilite.getDateDebutMidi() != null) intervals.add(disponibilite.getDateDebutMidi());
+            if (disponibilite.getDateFinMidi() != null) intervals.add(disponibilite.getDateFinMidi());
+            if (disponibilite.getDateDebutSoir() != null) intervals.add(disponibilite.getDateDebutSoir());
+            if (disponibilite.getDateFinSoir() != null) intervals.add(disponibilite.getDateFinSoir());
+            if (intervals.size() == 6 && intervals.get(1).equals(intervals.get(2))) {
+                intervals.remove(1);
+                intervals.remove(1);
             }
-            if (timeList.size() == 4 && timeList.get(1).equals(timeList.get(2))) {
-                timeList.remove(1);
-                timeList.remove(1);
+            if (intervals.size() == 4 && intervals.get(1).equals(intervals.get(2))) {
+                intervals.remove(1);
+                intervals.remove(1);
             }
-            transformedBesoins.put(disponibilite.getNounouId(), timeList);
+            List<List<LocalTime>> intervalsList = new ArrayList<>();
+            if (mappingDisponibilites.containsKey(disponibilite.getNounouId())) {
+                intervalsList = mappingDisponibilites.get(disponibilite.getNounouId());
+            }
+            intervalsList.add(intervals);
+            mappingDisponibilites.put(disponibilite.getNounouId(), intervalsList);
         }
-        return transformedBesoins;
+        return mappingDisponibilites;
     }
 }
