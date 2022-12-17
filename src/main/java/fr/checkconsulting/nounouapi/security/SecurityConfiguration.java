@@ -1,23 +1,32 @@
 package fr.checkconsulting.nounouapi.security;
 
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/api/v1/health/").permitAll()
-                .antMatchers("/api/v1/search/**").permitAll()
-                .antMatchers("/actuator/**").permitAll()
-                .antMatchers("/api/v1/famille/**").authenticated()
-                .and()
-                .oauth2ResourceServer().jwt();
+public class SecurityConfiguration {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeRequests(auth -> auth
+                        .antMatchers("/api/v1/health/").permitAll()
+                        .antMatchers("/api/v1/search/**").permitAll()
+                        .antMatchers("/actuator/**").permitAll()
+                        .antMatchers("/api/v1/nounou/**").authenticated()
+                        .antMatchers("/api/v1/disponibilites/**").authenticated()
+                        .antMatchers("/api/v1/famille/**").authenticated()
+                )
+                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+                .build();
     }
 }
 

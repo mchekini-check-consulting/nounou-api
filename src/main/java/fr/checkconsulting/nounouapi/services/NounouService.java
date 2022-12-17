@@ -47,8 +47,8 @@ public class NounouService {
     }
 
 
-    public Optional<Nounou> updateNounou(String email, Nounou nounouRequestBody) {
-        Optional<Nounou> nounou = nounouRepository.findById(email);
+    public Optional<Nounou> updateNounou(Nounou nounouRequestBody) {
+        Optional<Nounou> nounou = nounouRepository.findById(nounouRequestBody.getEmail());
         nounou.ifPresent(nounou1 -> {
             nounou1.setNom(nounouRequestBody.getNom());
             nounou1.setPrenom(nounouRequestBody.getPrenom());

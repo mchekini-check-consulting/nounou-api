@@ -16,5 +16,5 @@ public class NounouDTO {
     private String codePostal;
     private String ville;
     private String numeroTelephone;
-    private String mail;
+    private String email;
 }
