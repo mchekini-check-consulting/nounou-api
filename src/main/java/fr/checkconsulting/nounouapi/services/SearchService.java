@@ -59,7 +59,7 @@ public class SearchService {
                     .rue(nounou.getRue())
                     .codePostal(nounou.getCodePostal())
                     .ville(nounou.getVille())
-                    .mail(nounou.getEmail())
+                    .email(nounou.getEmail())
                     .numeroTelephone(nounou.getNumeroTelephone())
                     .build();
 
